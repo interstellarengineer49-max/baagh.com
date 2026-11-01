@@ -1,0 +1,173 @@
+@media (min-width: 100rem) {
+  .hero-content { padding-left: 1rem; }
+}
+@media (max-width: 820px) {
+  :root { --gutter: clamp(1.25rem, 5vw, 2.5rem); }
+  .site-header { min-height: 5.3rem; grid-template-columns: 1fr auto auto; gap: 1.2rem; }
+  .brand-logo { width: 8.6rem; }
+  .brand-subtitle { font-size: .4rem; }
+  .menu-toggle {
+    display: grid;
+    width: 2.8rem;
+    height: 2.8rem;
+    align-content: center;
+    justify-items: center;
+    gap: .38rem;
+    color: var(--paper);
+    border: 1px solid rgba(255,255,255,.5);
+    background: transparent;
+  }
+  .menu-toggle span { width: 1rem; height: 1px; background: currentColor; transition: transform .25s ease; }
+  .menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(.19rem) rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-.19rem) rotate(-45deg); }
+  .site-nav {
+    position: absolute;
+    inset: 100% 0 auto;
+    display: grid;
+    gap: 0;
+    padding: .4rem var(--gutter) 1rem;
+    background: var(--mulberry);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-.5rem);
+    transition: opacity .2s ease, transform .2s ease, visibility .2s;
+  }
+  .site-nav.is-open { visibility: visible; opacity: 1; transform: translateY(0); }
+  .site-nav a { padding: .9rem 0; border-bottom: 1px solid rgba(255,255,255,.16); }
+  .header-visit { padding: .72rem .8rem; font-size: .64rem; }
+  .header-visit span { margin-left: .3rem; }
+  .philosophy-grid, .offering-grid, .clarity-grid, .farm-grid, .garden-grid, .setting-grid, .visit-grid { grid-template-columns: 1fr; }
+  .philosophy-grid { gap: 2.5rem; }
+  .body-copy { max-width: 42rem; }
+  .life-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .land-card { min-height: 23rem; }
+  .clarity-grid { gap: 1.7rem; }
+  .farm-grid { gap: 3rem; }
+  .farm-image { min-height: 28rem; aspect-ratio: 1.2; }
+  .garden-grid, .setting-grid { gap: 3rem; }
+  .garden-grid > div { max-width: 42rem; }
+  .setting-image { min-height: 31rem; aspect-ratio: 1.1; }
+  .visit-grid { gap: 3rem; }
+  .visit-intro { max-width: 38rem; }
+  .visit-note { margin-top: 2rem; }
+}
+@media (max-width: 600px) {
+  html { scroll-padding-top: 4.5rem; }
+  .site-header { min-height: 4.8rem; grid-template-columns: 1fr auto auto; gap: .65rem; padding-inline: var(--gutter); }
+  .brand-logo { width: 7.25rem; }
+  .menu-toggle { width: 2.45rem; height: 2.45rem; }
+  .header-visit { padding: .68rem .6rem; font-size: .58rem; }
+  .hero { min-height: 48rem; min-height: 100svh; }
+  .hero-art { background-position: 58% center; }
+  .hero-content { margin-top: 4rem; }
+  .hero h1 { font-size: clamp(4.5rem, 19vw, 7rem); }
+  .hero-location { margin-bottom: 1.5rem; font-size: .58rem; }
+  .hero-footer { align-items: start; flex-direction: column; gap: 1.7rem; margin-top: 3.2rem; }
+  .hero-footer > p { font-size: .8rem; }
+  .round-link b { width: 3.1rem; height: 3.1rem; }
+  .scroll-cue { right: var(--gutter); bottom: 1.2rem; }
+  .scroll-cue span { display: none; }
+  .hero-ribbon { min-height: 4rem; flex-wrap: wrap; justify-content: center; gap: .45rem 1rem; font-size: .52rem; text-align: center; }
+  .hero-ribbon span:first-child { display: none; }
+  .philosophy { padding-top: 5rem; }
+  .philosophy-mark { margin-bottom: 2rem; }
+  .philosophy-grid { gap: 1.8rem; margin-top: 1.5rem; }
+  .philosophy h2, .section-heading h2, .farm-copy h2 { font-size: clamp(3.25rem, 14vw, 5rem); }
+  .body-copy p, .farm-copy > p:not(.eyebrow), .garden-grid > div > p:not(.eyebrow, .fine-print), .setting-copy > p:not(.eyebrow, .fine-print) { font-size: .81rem; }
+  .philosophy-signoff { flex-direction: column; gap: .55rem; margin-top: 4rem; font-size: 1.1rem; }
+  .section-heading { align-items: start; flex-direction: column; gap: 1.3rem; margin-bottom: 2.3rem; }
+  .section-heading .eyebrow { margin-bottom: 1rem; }
+  .section-heading h2 { font-size: clamp(3.15rem, 13vw, 4.5rem); }
+  .section-heading > p { font-size: .74rem; }
+  .life-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .life-image { min-height: 19rem; aspect-ratio: 1.05; }
+  .life-trigger { grid-template-columns: 1.8rem 1fr 1.1rem; gap: .55rem; padding: 1.2rem 0; }
+  .life-trigger > span:nth-child(2) { font-size: .84rem; }
+  .life-panel { padding-left: 2.35rem; font-size: .75rem; }
+  .land-card { min-height: 22rem; padding: 2rem; }
+  .land-amount { font-size: 6rem; }
+  .land-units { gap: 1.5rem; }
+  .offer-list article { grid-template-columns: 1.7rem 1fr; gap: .7rem; }
+  .offer-list h3 { font-size: 1.5rem; }
+  .offer-list p, .clarity-list p { font-size: .72rem; }
+  .clarity-list { grid-template-columns: 1fr; }
+  .clarity-grid h3 { font-size: 2.4rem; }
+  .details-callout { align-items: start; flex-direction: column; gap: .8rem; padding: 1.2rem; }
+  .details-callout p { font-size: 1.2rem; }
+  .farm-image, .garden-image { min-height: 20rem; aspect-ratio: 1.05; }
+  .farm-copy h2 { font-size: clamp(3.25rem, 13vw, 4.5rem); }
+  .garden-grid h2, .setting h2 { font-size: clamp(3.5rem, 14vw, 5rem); }
+  .setting-image { min-height: 24rem; aspect-ratio: .9; }
+  .visit h2 { font-size: clamp(3.5rem, 14vw, 5rem); }
+  .enquiry-form { padding: 1.25rem; }
+  .field-row { grid-template-columns: 1fr; gap: 0; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+  .footer-top > p { justify-self: end; font-size: 1.18rem; }
+  .footer-parent { justify-self: start; grid-column: 1 / -1; text-align: left; }
+  .footer-bottom { align-items: start; flex-direction: column; gap: 1rem; }
+  .footer-bottom nav { flex-wrap: wrap; gap: .8rem 1.2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+@media (max-width: 1100px) and (min-width: 821px) {
+  :root { --gutter: clamp(2rem, 4.5vw, 3.5rem); }
+  .life-grid, .offering-grid, .farm-grid, .garden-grid, .setting-grid, .visit-grid { gap: 2.5rem; }
+  .image-card { min-width: 0; min-height: 0; }
+  .life-image { width: 100%; aspect-ratio: .95; }
+  .farm-image { width: 100%; aspect-ratio: .95; }
+  .garden-image { width: 100%; aspect-ratio: 1.02; }
+  .setting-image { width: 100%; aspect-ratio: .82; }
+}
+@media (min-width: 821px) {
+  .hero-content { padding-bottom: 1.5rem; }
+  .hero h1 { max-width: 9.2ch; }
+}
+@media (max-width: 820px) {
+  .site-nav {
+    transition: opacity .38s cubic-bezier(.22,.61,.36,1), transform .38s cubic-bezier(.22,.61,.36,1), visibility .38s;
+  }
+  .site-nav a { transition: color .25s ease, padding-left .3s ease; }
+  .site-nav a:hover, .site-nav a:focus-visible { padding-left: .35rem; }
+  .hero-content { margin-top: 5rem; }
+  .hero h1 { max-width: 9.7ch; font-size: clamp(5.5rem, 12vw, 8rem); }
+  .philosophy-grid { text-align: center; }
+  .philosophy h2 { max-width: 13ch; }
+  .body-copy { max-width: 48rem; grid-template-columns: 1fr 1fr; gap: .8rem 2rem; }
+  .body-copy .text-link { justify-self: start; }
+  .life-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .life-image { min-height: 28rem; aspect-ratio: .86; }
+  .offering-grid { gap: 2rem; }
+  .land-card { min-height: 25rem; }
+  .farm-grid { gap: 2.5rem; }
+  .farm-image { min-height: 30rem; }
+  .garden-image { min-height: 27rem; }
+  .setting-image { min-height: 31rem; }
+  .visit-grid { gap: 2.5rem; }
+}
+@media (max-width: 600px) {
+  .hero { min-height: max(47rem, 100svh); }
+  .hero-content { margin-top: 4.3rem; padding-bottom: 1.5rem; }
+  .hero h1 { max-width: 10ch; font-size: clamp(4.5rem, 18.8vw, 6.4rem); line-height: .79; }
+  .hero-location { margin-bottom: 1.5rem; }
+  .hero-footer { margin-top: 3rem; }
+  .hero-ribbon { min-height: 4.2rem; }
+  .philosophy { padding-bottom: 2.5rem; }
+  .philosophy-grid { margin-top: 1.8rem; }
+  .philosophy h2 { max-width: 11ch; font-size: clamp(3.35rem, 13.3vw, 4.8rem); line-height: .87; }
+  .body-copy { grid-template-columns: 1fr; gap: .25rem; margin-top: 2rem; text-align: center; }
+  .body-copy .text-link { justify-self: center; }
+  .philosophy-signoff { margin-top: 3.5rem; }
+  .life-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .life-image { width: 100%; min-height: 0; aspect-ratio: 1.02; }
+  .life-accordion { margin-top: .2rem; }
+  .land-card { min-height: 23rem; }
+  .clarity-grid { gap: 1.5rem; }
+  .farm-image { width: 100%; min-height: 0; aspect-ratio: 1.05; }
+  .garden-image { width: 100%; min-height: 0; aspect-ratio: 1.05; }
+  .setting-image { width: 100%; min-height: 0; aspect-ratio: .9; }
+  .visit-grid { gap: 2.5rem; }
+  .enquiry-form { box-shadow: 0 1rem 2.5rem rgba(19,8,15,.1); }
+  .footer-top { padding-bottom: 2rem; }
+  .footer-bottom { padding-bottom: .5rem; }
+}
