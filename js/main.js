@@ -611,4 +611,3 @@ form?.addEventListener("submit", async (event) => {
 /* =========================================
    11. END OF BAAGH MAIN JAVASCRIPT
    ========================================= */
-```
