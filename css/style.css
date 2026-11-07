@@ -459,3 +459,12 @@ h1 em, h2 em { font-weight: 500; }
   .land-card:hover { transform: translateY(-4px); box-shadow: 0 1.2rem 2.8rem rgba(37,35,33,.12); }
   .footer-brand:hover { transform: translateY(-3px); }
 }
+/* Hide spam-protection honeypot from visitors */
+.form-honeypot {
+  position: absolute !important;
+  left: -10000px !important;
+  top: auto !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
