@@ -1,3 +1,4 @@
+
 /* =========================================
    BAAGH — COUNTRY LIVING
    Main JavaScript
@@ -313,7 +314,29 @@ let isSubmitting = false;
 
 
 /* =========================================
-   6. FORM VALIDATION
+   6. DATE PICKER CONFIGURATION
+   ========================================= */
+
+const visitDateField = form?.querySelector(
+  '[name="visit-date"]'
+);
+
+if (visitDateField) {
+  const today = new Date();
+
+  const localToday = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, "0"),
+    String(today.getDate()).padStart(2, "0"),
+  ].join("-");
+
+  // Prevent customers from selecting past dates.
+  visitDateField.min = localToday;
+}
+
+
+/* =========================================
+   7. FORM VALIDATION
    ========================================= */
 
 function validateField(field) {
@@ -351,6 +374,24 @@ function validateField(field) {
     }
   }
 
+  if (
+    !message &&
+    field.name === "visit-date" &&
+    field.value
+  ) {
+    const today = new Date();
+
+    const localToday = [
+      today.getFullYear(),
+      String(today.getMonth() + 1).padStart(2, "0"),
+      String(today.getDate()).padStart(2, "0"),
+    ].join("-");
+
+    if (field.value < localToday) {
+      message = "Please choose today or a future date.";
+    }
+  }
+
   field.setAttribute(
     "aria-invalid",
     String(Boolean(message))
@@ -365,15 +406,17 @@ function validateField(field) {
 
 
 /* =========================================
-   7. VALIDATION EVENT LISTENERS
+   8. VALIDATION EVENT LISTENERS
    ========================================= */
 
 form
-  ?.querySelectorAll("input[required], select[required]")
+  ?.querySelectorAll("input:not([type='hidden']):not([name='website']), select, textarea")
   .forEach((field) => {
 
     field.addEventListener("blur", () => {
-      validateField(field);
+      if (field.value || field.required) {
+        validateField(field);
+      }
     });
 
     field.addEventListener("input", () => {
@@ -385,14 +428,37 @@ form
     });
 
     field.addEventListener("change", () => {
-      validateField(field);
+      if (
+        field.value ||
+        field.required ||
+        field.getAttribute("aria-invalid") === "true"
+      ) {
+        validateField(field);
+      }
     });
 
   });
 
 
 /* =========================================
-   8. GOOGLE SHEETS ENQUIRY SUBMISSION
+   9. RESET FORM VALIDATION
+   ========================================= */
+
+function clearFormErrors() {
+  if (!form) return;
+
+  form.querySelectorAll("[aria-invalid]").forEach((field) => {
+    field.removeAttribute("aria-invalid");
+  });
+
+  form.querySelectorAll(".field-error").forEach((error) => {
+    error.textContent = "";
+  });
+}
+
+
+/* =========================================
+   10. GOOGLE SHEETS ENQUIRY SUBMISSION
    ========================================= */
 
 form?.addEventListener("submit", async (event) => {
@@ -403,15 +469,15 @@ form?.addEventListener("submit", async (event) => {
     return;
   }
 
-  /* Validate required fields */
+  /* Validate required and optional fields */
 
-  const requiredFields = [
+  const fieldsToValidate = [
     ...form.querySelectorAll(
-      "input[required], select[required]"
+      "input[required], select[required], input[name='visit-date']"
     ),
   ];
 
-  const isValid = requiredFields
+  const isValid = fieldsToValidate
     .map(validateField)
     .every(Boolean);
 
@@ -430,21 +496,51 @@ form?.addEventListener("submit", async (event) => {
 
   const formData = new FormData(form);
 
+  const visitDate = formData.get("visit-date") || "";
+  const visitTime = formData.get("visit-time") || "";
+
+  let preferredVisit = "";
+
+  if (visitDate && visitTime) {
+    preferredVisit = `${visitDate} at ${visitTime}`;
+  } else if (visitDate) {
+    preferredVisit = visitDate;
+  } else if (visitTime) {
+    preferredVisit = visitTime;
+  }
+
   const enquiry = {
     name: formData.get("name"),
     phone: formData.get("phone"),
     email: formData.get("email"),
     interest: formData.get("interest"),
-    visit: formData.get("visit-preference") || "",
+
+    // Date and time are stored together
+    // in the existing Preferred Visit column.
+    visit: preferredVisit,
+
     message: formData.get("message") || "",
+
+    // Spam protection.
+    website: formData.get("website") || "",
   };
+
+  /* Honeypot spam protection */
+
+  if (enquiry.website) {
+    feedback.textContent =
+      "Your enquiry could not be processed.";
+
+    return;
+  }
 
   /* Prevent duplicate submissions */
 
   isSubmitting = true;
   submitButton.disabled = true;
 
-  submitButton.textContent = "Sending enquiry...";
+  submitButton.innerHTML =
+    'Sending enquiry...';
 
   feedback.textContent =
     "Please wait while we process your request.";
@@ -456,8 +552,8 @@ form?.addEventListener("submit", async (event) => {
       through a simple text/plain POST.
 
       no-cors makes the browser response opaque.
-      Therefore, successful fetch resolution
-      does NOT confirm spreadsheet insertion.
+      Therefore, a successful fetch resolution
+      does not independently confirm spreadsheet insertion.
     */
 
     await fetch(BACKEND_URL, {
@@ -471,8 +567,22 @@ form?.addEventListener("submit", async (event) => {
       body: JSON.stringify(enquiry),
     });
 
+    /*
+      The existing backend uses no-cors.
+      The browser cannot read its JSON response.
+      This message confirms the request was handed
+      to the browser's network layer, not independently
+      verified spreadsheet insertion.
+    */
+
     feedback.textContent =
-      "Your request was sent. Please note that receipt must be verified in our enquiry records.";
+      "Your enquiry has been submitted. Our team will be in touch. If you need immediate assistance, please contact BAAGH directly.";
+
+    // Clear submitted details without reloading the page.
+    form.reset();
+
+    // Clear previous validation messages.
+    clearFormErrors();
 
   } catch (error) {
 
@@ -491,7 +601,7 @@ form?.addEventListener("submit", async (event) => {
     submitButton.disabled = false;
 
     submitButton.innerHTML =
-      'Check enquiry details <span aria-hidden="true">↗</span>';
+      'Send enquiry <span aria-hidden="true">↗</span>';
 
   }
 
@@ -499,5 +609,6 @@ form?.addEventListener("submit", async (event) => {
 
 
 /* =========================================
-   9. END OF BAAGH MAIN JAVASCRIPT
+   11. END OF BAAGH MAIN JAVASCRIPT
    ========================================= */
+```
